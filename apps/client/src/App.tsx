@@ -1,4 +1,3 @@
-import { Progress } from "antd";
 import { lazy, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { DentoRoutes } from "./core/constants/routes";
@@ -23,7 +22,7 @@ function App() {
             <Route path="*" element={<Navigate to={"/"} replace />} />
           ) : (
             <>
-              <Route path={DentoRoutes.login.create()} element={Login} />
+              <Route path={DentoRoutes.login.create()} element={<Login />} />
             </>
           )}
         </Routes>

@@ -1,8 +1,4 @@
 import { useState } from "react";
-import { PrismaClient } from "@prisma/client";
-import { supabase } from "../../../supabase";
-
-const prisma = new PrismaClient();
 
 const SignUpPage = () => {
   const [email, setEmail] = useState("");
@@ -18,35 +14,35 @@ const SignUpPage = () => {
     setError("");
 
     // Create user with Supabase Authentication
-    const { data: user, error: signupError } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    // const { data: user, error: signupError } = await supabase.auth.signUp({
+    //   email,
+    //   password,
+    // });
 
-    if (signupError) {
-      setLoading(false);
-      setError("Error creating user: " + signupError.message);
-      return;
-    }
+    // if (signupError) {
+    //   setLoading(false);
+    //   setError("Error creating user: " + signupError.message);
+    //   return;
+    // }
 
     // If user is created successfully, insert user into the database
     try {
-      if (user) {
-        // Add the user to your database
-        await prisma.user.create({
-          data: {
-            email: user.email!,
-            password: password, // In production, use hashed passwords
-            name: name,
-            roles: ["Doctor"], // Or use a dynamic role as per your application
-            clinicId: "clinicId_example", // Ensure you pass a valid clinicId here
-          },
-        });
-        alert("User created successfully");
-      }
+      // if (user) {
+      //   // Add the user to your database
+      //   await prisma.user.create({
+      //     data: {
+      //       email: user.email!,
+      //       password: password, // In production, use hashed passwords
+      //       name: name,
+      //       roles: ["Doctor"], // Or use a dynamic role as per your application
+      //       clinicId: "clinicId_example", // Ensure you pass a valid clinicId here
+      //     },
+      //   });
+      //   alert("User created successfully");
+      // }
     } catch (error) {
       setLoading(false);
-      setError("Error inserting user into the database: " + error.message);
+      setError("Error inserting user into the database: " + error);
     }
 
     setLoading(false);
