@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "swagger":"swag-ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.0",
@@ -18,7 +19,8 @@
     "react-hook-form-context": "^1.0.0",
     "react-route-type": "https://github.com/mohammadgharouni/react-route-type",
     "react-router-dom": "6.28.0",
-    "@supabase/supabase-js":"^2.46.2"
+    "@supabase/supabase-js":"^2.46.2",
+    "swagger-typescript":"^6.9.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
