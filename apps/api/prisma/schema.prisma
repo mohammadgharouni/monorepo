@@ -1,21 +1,137 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-model User{
-  id String @id @default(cuid())
-  username String
-  email String
-  password String
-  hashedRefreshToken String?
-  createdAt DateTime @default(now())
-  updateAt DateTime @default(now())
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  password     String
+  name         String
+  roles        Role[]
+  clinicId     String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Assistant    Assistant[]
+  Availability Availability[]
+  Doctor       Doctor[]
+  clinic       Clinic         @relation(fields: [clinicId], references: [id])
+}
+
+model Doctor {
+  id           String         @id @default(cuid())
+  userId       String
+  clinicId     String
+  medicalId    String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Appointment  Appointment[]
+  availability Availability[]
+  clinic       Clinic         @relation(fields: [clinicId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
+  appointments Appointment[]  @relation("DoctorAppointments")
+}
+
+model Assistant {
+  id          String        @id @default(cuid())
+  userId      String
+  salary      Float
+  clinicId    String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Appointment Appointment[]
+  clinic      Clinic        @relation(fields: [clinicId], references: [id])
+  user        User          @relation(fields: [userId], references: [id])
+}
+
+model Clinic {
+  id           String        @id @default(cuid())
+  name         String
+  address      String
+  appointments Appointment[]
+  assistants   Assistant[]
+  doctors      Doctor[]
+  patients     Patient[]
+  services     Service[]
+  users        User[]
+}
+
+model Service {
+  id           String        @id @default(cuid())
+  name         String
+  description  String?
+  price        Float
+  clinicId     String
+  appointments Appointment[]
+  clinic       Clinic        @relation(fields: [clinicId], references: [id])
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  patientId   String
+  doctorId    String
+  assistantId String
+  serviceId   String
+  clinicId    String
+  status      AppointmentStatus @default(SCHEDULED)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  assistant   Assistant         @relation(fields: [assistantId], references: [id])
+  clinic      Clinic            @relation(fields: [clinicId], references: [id])
+  doctor      Doctor            @relation(fields: [doctorId], references: [id])
+  patient     Patient           @relation(fields: [patientId], references: [id])
+  service     Service           @relation(fields: [serviceId], references: [id])
+  Doctor      Doctor[]          @relation("DoctorAppointments")
+}
+
+model Patient {
+  id           String        @id @default(cuid())
+  name         String
+  clinicId     String
+  history      String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+  clinic       Clinic        @relation(fields: [clinicId], references: [id])
+}
+
+model Availability {
+  id        String    @id @default(cuid())
+  userId    String
+  startTime DateTime
+  endTime   DateTime
+  dayOfWeek DayOfWeek
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  doctorId  String?
+  doctor    Doctor?   @relation(fields: [doctorId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  Doctor
+  Assistant
+  Admin
+  SuperAdmin
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+enum DayOfWeek {
+  Saturday
+  Sunday
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
 }

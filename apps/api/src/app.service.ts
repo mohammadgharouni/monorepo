@@ -4,10 +4,11 @@ import { PrismaService } from './prisma/prisma.service';
 
 @Injectable()
 export class AppService {
-  constructor(private prisma: PrismaService){}
+  constructor(private prisma: PrismaService) {}
   @Query(() => String)
   async getHello(): Promise<string> {
     const user = await this.prisma.user.findFirst();
-    return 'Hello World!' + user.username;
+    console.log('user', user);
+    return 'Hello World!' + user.name;
   }
 }
