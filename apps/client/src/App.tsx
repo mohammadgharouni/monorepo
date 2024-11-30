@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
-import "./App.css";
 import { Button } from "antd";
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App bg-black">
       <Button>hi</Button>
       <div>
         <a href="https://vitejs.dev" target="_blank">
