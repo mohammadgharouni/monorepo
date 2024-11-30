@@ -10,7 +10,7 @@ import type { SwaggerResponse } from "./config";
 import { Http } from "./httpRequest";
 //@ts-ignore
 import qs from "qs";
-import type { LoginDto } from "./types";
+import type { LoginRequestDto } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const __DEV__ = process.env.NODE_ENV !== "production";
@@ -85,9 +85,9 @@ export const get = (
 get.key = "/";
 
 export const postAuthLogin = (
-  requestBody: LoginDto,
+  requestBody: LoginRequestDto,
   configOverride?: AxiosRequestConfig
-): Promise<SwaggerResponse<unknown>> => {
+): Promise<SwaggerResponse<any>> => {
   return Http.postRequest(
     postAuthLogin.key,
     undefined,

@@ -16,7 +16,7 @@ import {
 } from "@tanstack/react-query";
 import { RequestError, SwaggerResponse } from "./config";
 
-import type { LoginDto } from "./types";
+import type { LoginRequestDto } from "./types";
 import { get, postAuthLogin } from "./services";
 
 export type SwaggerTypescriptMutationDefaultParams<TExtra> = {
@@ -77,7 +77,7 @@ useGet.prefetch = (
 export const usePostAuthLogin = <TExtra>(
   options?: SwaggerTypescriptUseMutationOptions<
     any,
-    { requestBody: LoginDto },
+    { requestBody: LoginRequestDto },
     TExtra
   >
 ) => {

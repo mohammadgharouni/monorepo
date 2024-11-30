@@ -11,7 +11,6 @@ export class AuthService {
       email,
       password,
     });
-
     if (error) {
       throw new Error(error.message);
     }

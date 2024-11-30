@@ -16,6 +16,12 @@ async function bootstrap() {
     jsonDocumentUrl: 'swagger/json',
   });
 
+  app.enableCors({
+    origin: 'http://localhost:5173', // Replace with your Vite app URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // If you are using cookies/auth
+  });
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

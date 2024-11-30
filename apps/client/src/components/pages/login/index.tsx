@@ -1,16 +1,20 @@
-import { useState } from "react";
 import { LoginForm, LoginTypes } from "./context";
 import { Button } from "antd";
 import { InputDefault } from "@/components/molecules/input/default";
 import { usePostAuthLogin } from "@/core/services/hooks";
+import useAuthStore from "@/core/store/auth";
 
 const LoginPage = () => {
+  const { setAccessToken } = useAuthStore();
+
   const { handleSubmit } = LoginForm.useFormContext();
-  const [loading, setLoading] = useState(false);
-  const { mutate, isPending } = usePostAuthLogin();
+  const { mutate, isPending } = usePostAuthLogin({
+    onSuccess: (data) => {
+      setAccessToken(data.access_token);
+    },
+  });
 
   const handleSignIn = async ({ password, email }: LoginTypes) => {
-    setLoading(true);
     mutate({ requestBody: { email, password } });
   };
   return (
@@ -46,10 +50,9 @@ const LoginPage = () => {
       <Button
         loading={isPending}
         onClick={handleSubmit(handleSignIn)}
-        disabled={loading}
         className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
       >
-        {loading ? "Creating..." : "Sign In"}
+        {isPending ? "Creating..." : "Sign In"}
       </Button>
     </div>
   );

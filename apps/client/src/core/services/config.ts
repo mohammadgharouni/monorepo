@@ -14,11 +14,10 @@ import Axios, {
 import qs from "qs";
 
 const baseConfig: AxiosRequestConfig = {
-  baseURL: "localhost:3000", // <--- Add your base url
+  baseURL: "http://localhost:3000", // <--- Add your base url
   headers: {
-    "Content-Encoding": "UTF-8",
     Accept: "application/json",
-    "Content-Type": "application/json-patch+json",
+    "Content-Type": "application/json",
   },
   paramsSerializer: (param) => qs.stringify(param, { indices: false }),
 };
