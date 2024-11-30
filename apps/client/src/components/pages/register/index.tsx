@@ -1,57 +1,39 @@
 import { useState } from "react";
 
-const Register = () => {
+const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSignUp = async () => {
     setLoading(true);
-    setError("");
+    const response = await fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password, // Hash this in production
+        name,
+        clinicId: "1",
+      }),
+    });
 
-    // Create user with Supabase Authentication
-    // const { data: user, error: signupError } = await supabase.auth.signUp({
-    //   email,
-    //   password,
-    // });
-
-    // if (signupError) {
-    //   setLoading(false);
-    //   setError("Error creating user: " + signupError.message);
-    //   return;
-    // }
-
-    // If user is created successfully, insert user into the database
-    // try {
-    //   if (user) {
-    //     // Add the user to your database
-    //     await prisma.user.create({
-    //       data: {
-    //         email: user.email!,
-    //         password: password, // In production, use hashed passwords
-    //         name: name,
-    //         roles: ["Doctor"], // Or use a dynamic role as per your application
-    //         clinicId: "clinicId_example", // Ensure you pass a valid clinicId here
-    //       },
-    //     });
-    //     alert("User created successfully");
-    //   }
-    // } catch (error) {
-    //   setLoading(false);
-    //   setError("Error inserting user into the database: " + error.message);
-    // }
+    const data = await response.json();
+    if (response.ok) {
+      console.log("User created successfully:", data.user);
+    } else {
+      console.error("Error:", data.error);
+    }
 
     setLoading(false);
   };
-
   return (
     <div className="mx-auto mt-10 max-w-lg rounded border p-5 shadow-lg">
       <h1 className="mb-5 text-2xl font-semibold">Sign Up</h1>
-      {error && <p className="mb-3 text-red-500">{error}</p>}
+      {/* {error && <p className="mb-3 text-red-500">{error}</p>} */}
       <form onSubmit={handleSignUp} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
@@ -104,4 +86,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUpPage;

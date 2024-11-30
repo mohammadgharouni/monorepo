@@ -14,7 +14,7 @@ import Axios, {
 import qs from "qs";
 
 const baseConfig: AxiosRequestConfig = {
-  baseURL: "", // <--- Add your base url
+  baseURL: "localhost:3000", // <--- Add your base url
   headers: {
     "Content-Encoding": "UTF-8",
     Accept: "application/json",
@@ -52,6 +52,7 @@ function getAxiosInstance(security: Security): AxiosInstance {
         if (error.response) {
           return Promise.reject(
             new RequestError(
+              // @ts-ignore
               error.response.data,
               error.response.status,
               error.response

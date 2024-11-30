@@ -1,11 +1,11 @@
 import { createFormContext } from "react-hook-form-context";
 
 export type LoginTypes = {
-  username: string;
+  email: string;
   password: string;
 };
 
 export const LoginForm = createFormContext<LoginTypes>({
-  username: "",
+  email: "",
   password: "",
 });

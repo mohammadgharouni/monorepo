@@ -1,6 +1,11 @@
-import { Timeline as AntTimeline, ConfigProvider, ThemeConfig, TimelineProps } from 'antd';
+import {
+  Timeline as AntTimeline,
+  ConfigProvider,
+  ThemeConfig,
+  TimelineProps,
+} from "antd";
 
-import { colors } from '@abrplus/logic';
+import { colors } from "@/core/constants/colors";
 
 const timeThemeConfig: ThemeConfig = {
   components: {

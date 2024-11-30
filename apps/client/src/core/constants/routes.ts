@@ -3,6 +3,7 @@ import { route } from "react-route-type";
 const DentoRoutes = route("dento").createNestedRoutes((dento) => ({
   dento,
   login: dento.route(["login"]),
+  register: dento.route(["register"]),
   //   justForPagination: route("", { query: { page: "" } }),
   //   dates: dento.route(["dates", ":reportId"]),
   //   newReport: dento.route(["newReport", ":reportId"], {

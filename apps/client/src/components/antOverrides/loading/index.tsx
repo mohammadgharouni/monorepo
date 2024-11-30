@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import { twMerge } from 'tailwind-merge';
+import React, { Fragment } from "react";
+import { twMerge } from "tailwind-merge";
 
-import { colors } from '@abrplus/logic';
+import { colors } from "@/core/constants/colors";
 
 export interface SpinnerProps {
   size?: number;
@@ -28,8 +28,12 @@ export const Loading = ({
 }: SpinnerProps) => {
   const spinner = (
     <div
-      className={twMerge('grid place-items-center', className)}
-      style={{ width: width || size, height: height || size, minHeight: heightOffset }}
+      className={twMerge("grid place-items-center", className)}
+      style={{
+        width: width || size,
+        height: height || size,
+        minHeight: heightOffset,
+      }}
     >
       <svg
         width={`${size}px`}
@@ -66,9 +70,9 @@ export const Loading = ({
             <animateTransform
               attributeName="transform"
               type="rotate"
-              values={`0 ${size / 2} ${size / 2};135 ${size / 2} ${size / 2};450 ${size / 2} ${
+              values={`0 ${size / 2} ${size / 2};135 ${size / 2} ${
                 size / 2
-              }`}
+              };450 ${size / 2} ${size / 2}`}
               begin="0s"
               dur="1.4s"
               repeatCount="indefinite"
